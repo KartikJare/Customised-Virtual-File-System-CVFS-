@@ -1,117 +1,176 @@
 # 🗂️ Customised Virtual File System (CVFS)
 
-### (C / C++ | System Programming Project)
+### (C++ | System Programming | Mini OS Simulation)
 
 ## 📌 Description
 
-**Customised Virtual File System (CVFS)** is a system-level project that simulates a virtual file system inside a single application.
+The **Customised Virtual File System (CVFS)** is a system-level project written in C++ that simulates how an operating system manages files internally.
 
-It demonstrates how operating systems manage files internally using concepts like:
+It recreates core OS components such as:
 
-* File tables
+* Superblock
 * Inodes
-* File descriptors
-* File metadata
-* Read / write operations
+* File Table
+* User File Descriptor Table (UFDT)
+
+This project acts like a **mini file system shell**, allowing users to create, read, write, and manage files in memory.
 
 ---
 
 ## 🚀 Features
 
-* 📁 Create virtual files
-* 📖 Read file contents
-* ✍️ Write data into files
-* 🗑️ Delete files
-* 📋 List available files
-* 📊 Display file information
-* 🧠 Simulates OS-level file management
+* 📁 Create virtual files (`creat`)
+* 🗑️ Delete files (`unlink`)
+* 📋 List files (`ls`)
+* 📊 Display file info (`stat`)
+* ✍️ Write data into file (`write`)
+* 📖 Read data from file (`read`)
+* 📖 Command help system (`man`, `help`)
+* 🖥️ Custom interactive shell
 
 ---
 
 ## 🛠️ Technologies Used
 
-* Language: **C / C++**
+* Language: **C++**
 * Concepts:
 
-  * Virtual File System
-  * File Descriptor Table
-  * Inode Management
-  * File Handling
-  * Memory Management
-  * System Programming
+  * File System Design
+  * Inode-based architecture
+  * Memory management
+  * Linked list (DILB – Disk Inode List Block)
+  * Command-line interface
 
 ---
 
-## 📂 Project Structure
+## 🧠 Core Architecture
 
-```bash
-Customised-Virtual-File-System-CVFS-/
-│── CVFS.c / CVFS.cpp
-│── README.md
-```
+### 🔹 Superblock
+
+* Tracks total and free inodes
+
+### 🔹 Inode Structure
+
+Each file is represented using an inode containing:
+
+* File name
+* File size
+* File type
+* Permissions
+* Buffer (actual data)
+
+---
+
+### 🔹 File Table (UFDT)
+
+* Maintains opened files
+* Tracks read/write offsets
+
+---
+
+### 🔹 DILB (Disk Inode List Block)
+
+* Linked list of all inodes
+* Initialized at startup
 
 ---
 
 ## ⚙️ How It Works
 
-1. CVFS creates a virtual storage environment in memory
-2. User can create, open, read, write, close, and delete files
-3. File metadata is managed using inode-like structures
-4. File operations are handled internally without directly depending on normal OS files
+1. System initializes:
+
+   * BootBlock
+   * SuperBlock
+   * DILB
+   * UAREA
+
+2. User interacts via shell:
+
+```bash
+My CVFS >
+```
+
+3. Commands are parsed and executed:
+
+* File operations handled using in-memory structures
+* No real OS files are used
 
 ---
 
 ## 🧑‍💻 How to Run
 
-### C
+### 🔧 Compile
 
 ```bash
-gcc CVFS.c -o CVFS
-./CVFS
+g++ CVFS.cpp -o cvfs
 ```
 
-### C++
+### ▶️ Run
 
 ```bash
-g++ CVFS.cpp -o CVFS
-./CVFS
+./cvfs
 ```
 
 ---
 
-## 📌 Sample Commands
+## 📂 Sample Commands
 
 ```bash
-create Demo.txt 3
-write Demo.txt
-read Demo.txt 10
+creat Demo.txt 3
+write 0
+read 0 10
 ls
 stat Demo.txt
-close Demo.txt
-rm Demo.txt
+unlink Demo.txt
+help
 exit
 ```
 
 ---
 
-## 💡 Learning Outcomes
+## 📊 Sample Output
 
-* Understanding internal working of file systems
-* File descriptor and inode simulation
-* System-level project design
-* Memory-based file management
-* OS concepts implementation
+```bash
+My CVFS > creat Demo.txt 3
+File is successfully created with FD : 0
+
+My CVFS > write 0
+Please enter the data...
+10 bytes gets successfully written into the file
+
+My CVFS > read 0 10
+Data from file is : HelloWorld
+```
+
+---
+
+## ⚠️ Limitations
+
+* In-memory file system (no persistent storage)
+* Limited number of files (MAXINODE = 5)
+* Fixed file size (100 bytes)
+* No directory structure
 
 ---
 
 ## 📈 Future Improvements
 
-* Add persistent storage
-* Add encryption support
+* Add persistent storage (save to disk)
 * Add directory support
-* Add user permissions
+* Add file permissions (user/group)
+* Add encryption
 * Add GUI interface
-* Add import/export functionality
+* Add multi-user support
+
+---
+
+## 💡 Learning Outcomes
+
+* Deep understanding of file systems
+* OS internal concepts (inode, superblock)
+* Memory-based data management
+* Command interpreter design
+* System-level programming
 
 ---
 
@@ -121,13 +180,26 @@ exit
 
 ---
 
+## 📜 License
+
+All Rights Reserved © 2026
+
+---
+
 ## ⭐ Why This Project Matters
 
-This is a strong system-programming project because it shows how real operating systems manage files internally.
+This is a **mini operating system–level project**.
 
-It is useful for:
+It demonstrates:
 
-* Operating System concepts
-* System programming
-* Low-level software development
-* Interview and placement projects
+* File system design
+* OS-level thinking
+* Data structure + system integration
+
+👉 Extremely valuable for:
+
+* System Programming roles
+* OS interviews
+* Product-based companies
+
+---
